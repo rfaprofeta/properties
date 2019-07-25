@@ -2,9 +2,6 @@
 
 from bs4 import BeautifulSoup as bs
 from requests import get
-from datetime import datetime
-
-agora = datetime.now()
 
 def subprocessamento(web_adress):
 	try:
@@ -42,13 +39,9 @@ def save(lista):
 	with open('imoveis.csv','a') as file:
 		file.write(";".join(lista)+ '\n')
 
-def situation(page):
-	print("page {0}\t{1}".format(page,datetime.now() - agora))
-
 def queue(web_adress, number):
 	anterior = ''
 	for page in range(1,number):
-		situation(page)
 		site = get(web_adress + '/venda/sp/ribeirao-preto/?pagina=' + str(page) + '#onde=BR-Sao_Paulo-NULL-Ribeirao_Preto')
 		sitesp = bs(site.content,'lxml')
 		for link in sitesp.find_all("a"):
